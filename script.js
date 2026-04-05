@@ -196,11 +196,11 @@ setInterval(spawnHeart, 1800);
   // Small delay before starting
   await delay(700);
 
-  await typeText(line1, "Hey... there is something I have been wanting to say.", 44);
+  await typeText(line1, "Hey... I know things have been different between us lately.", 44);
   await delay(550);
 
   await fadeIn(line2);
-  await typeText(line2, "It has been on my mind for a while now.", 44);
+  await typeText(line2, "And I have been sitting with something I needed to say.", 44);
   await delay(400);
 
   showBtn(btnCont, 300);
@@ -224,11 +224,11 @@ async function initBuildup() {
   const btnGo    = document.getElementById('btn-goahead');
 
   await delay(300);
-  await typeText(line1, "I really hope this makes you smile.", 46);
+  await typeText(line1, "I miss you. Not in a complicated way.", 46);
   await delay(450);
 
   await fadeIn(line2);
-  await typeText(line2, "Because I have a question for you.", 46);
+  await typeText(line2, "Just the way things felt when it was easy between us.", 46);
   await delay(400);
 
   showBtn(btnGo, 300);
@@ -356,15 +356,15 @@ async function initTwist() {
   const btnFeel  = document.getElementById('btn-feelgood');
 
   await delay(300);
-  await typeText(line1, "Haha okay, you win.", 52);
+  await typeText(line1, "Okay, I hear you.", 52);
   await delay(350);
 
   await fadeIn(line2);
-  await typeText(line2, "That button really did not want to cooperate.", 44);
+  await typeText(line2, "No pressure. Truly.", 44);
   await delay(350);
 
   await fadeIn(line3);
-  await typeText(line3, "No pressure at all, I promise.", 44);
+  await typeText(line3, "I just wanted you to know that I still care.", 44);
   await delay(400);
 
   showBtn(btnFeel, 300);
