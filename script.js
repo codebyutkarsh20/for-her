@@ -155,9 +155,11 @@ function initQuestion() {
   btnNo.textContent = 'No';
   btnNo.style.transform = '';
   btnNo.style.position = 'absolute';
+  // Reset container height
+  btnNo.parentElement.style.minHeight = '160px';
 
-  // Position the No button relative to its parent
-  positionNoBtn(btnNo, 0);
+  // Place No clearly on the right side to start (after paint)
+  requestAnimationFrame(() => placeNoInitial(btnNo));
 
   // ── Yes button ──
   btnYes.addEventListener('click', () => {
@@ -174,21 +176,16 @@ function initQuestion() {
   btnNo.addEventListener('click', handleNoHover);
 }
 
-function positionNoBtn(btn, attempt) {
+/** Set the No button at its starting position (right side, vertically centered). */
+function placeNoInitial(btn) {
   const parent = btn.parentElement;
-  const pw = parent.offsetWidth;
-  const ph = parent.offsetHeight || 80;
+  const pw  = parent.offsetWidth  || 400;
+  const ph  = parseInt(parent.style.minHeight) || 160;
+  const bw  = btn.offsetWidth  || 100;
+  const bh  = btn.offsetHeight || 48;
 
-  // Keep it within the answer-buttons area but offset each attempt
-  const baseX = pw / 2 + 10; // to the right of yes button
-  const scatter = Math.min(attempt * 18, 120);
-  const angle = attempt * 137.5; // golden angle for nice scatter
-
-  const x = baseX + Math.cos(angle) * scatter;
-  const y = (ph / 2 - 22) + Math.sin(angle) * scatter * 0.6;
-
-  btn.style.left = `${Math.max(0, Math.min(pw - 130, x))}px`;
-  btn.style.top  = `${Math.max(0, Math.min(ph - 50,  y))}px`;
+  btn.style.left = `${pw - bw - Math.round(pw * 0.12)}px`;
+  btn.style.top  = `${Math.round((ph - bh) / 2)}px`;
 }
 
 function handleNoHover() {
@@ -197,35 +194,43 @@ function handleNoHover() {
   noAttempts++;
   const btnNo  = document.getElementById('btn-no');
   const parent = btnNo.parentElement;
-  const pw = parent.offsetWidth;
-  const ph = Math.max(parent.offsetHeight, 90);
+  const pw = parent.offsetWidth || 400;
+
+  // Grow container height gradually so button has more room to escape
+  const currentH = parseInt(parent.style.minHeight) || 160;
+  const newH = Math.min(currentH + 18, 320);
+  parent.style.minHeight = `${newH}px`;
 
   // Text stays fixed
   btnNo.textContent = 'No';
 
-  // Increase container height as button escapes more aggressively
-  parent.style.minHeight = `${Math.min(ph + 10, 200)}px`;
-
-  // Scramble to a random corner
-  const margin = 10;
-  const bw = btnNo.offsetWidth  || 120;
+  const margin = 14;
+  const bw = btnNo.offsetWidth  || 100;
   const bh = btnNo.offsetHeight || 48;
 
   const maxX = Math.max(pw - bw - margin, margin);
-  const maxY = Math.max(Number(parent.style.minHeight || 80) - bh - margin, margin);
+  const maxY = Math.max(newH - bh - margin, margin);
 
-  const x = margin + Math.random() * maxX;
-  const y = margin + Math.random() * maxY;
+  // Keep away from current position for a more dramatic escape
+  let x, y, tries = 0;
+  const curX = parseFloat(btnNo.style.left) || pw * 0.7;
+  const curY = parseFloat(btnNo.style.top)  || newH * 0.5;
+  do {
+    x = margin + Math.random() * maxX;
+    y = margin + Math.random() * maxY;
+    tries++;
+  } while (tries < 8 && Math.hypot(x - curX, y - curY) < 80);
 
   btnNo.style.left = `${x}px`;
   btnNo.style.top  = `${y}px`;
 
-  // Wobble
-  const rotations = [-12, 12, -18, 18, 0];
-  btnNo.style.transform = `rotate(${rotations[noAttempts % rotations.length]}deg) scale(${0.95 - noAttempts * 0.01})`;
+  // Wobble increases with each attempt
+  const rotations = [-10, 14, -18, 20, -8, 16, -22, 12, 0, -15];
+  const scaleDown = Math.max(0.88, 0.98 - noAttempts * 0.01);
+  btnNo.style.transform = `rotate(${rotations[noAttempts % rotations.length]}deg) scale(${scaleDown})`;
 
-  // After 5 attempts → trigger twist
-  if (noAttempts >= 5 && !twistTriggered) {
+  // After 10 attempts → trigger twist
+  if (noAttempts >= 10 && !twistTriggered) {
     twistTriggered = true;
     setTimeout(() => {
       goTo('screen-question', 'screen-twist', initTwist);
