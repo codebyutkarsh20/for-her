@@ -101,11 +101,11 @@ setInterval(spawnHeart, 1800);
   // Small delay before starting
   await delay(700);
 
-  await typeText(line1, "Hey… I wanted to tell you something important.", 44);
+  await typeText(line1, "Hey… there's something I've been wanting to say.", 44);
   await delay(550);
 
   await fadeIn(line2);
-  await typeText(line2, "I've been thinking about this for a while...", 44);
+  await typeText(line2, "It's been on my mind for a while now...", 44);
   await delay(400);
 
   showBtn(btnCont, 300);
@@ -126,11 +126,11 @@ async function initBuildup() {
   const btnGo    = document.getElementById('btn-goahead');
 
   await delay(300);
-  await typeText(line1, "I hope you won't misunderstand…", 46);
+  await typeText(line1, "I really hope this makes you smile…", 46);
   await delay(450);
 
   await fadeIn(line2);
-  await typeText(line2, "But I really wanted to ask you this 🥺", 46);
+  await typeText(line2, "Because I have a question for you 🥺", 46);
   await delay(400);
 
   showBtn(btnGo, 300);
@@ -144,17 +144,6 @@ async function initBuildup() {
 let noAttempts = 0;
 let twistTriggered = false;
 
-const NO_TEXTS  = [
-  "No 🙈",
-  "Are you sure? 🥺",
-  "Really sure? 😟",
-  "Think again 😭",
-  "Please… 🙏",
-  "Don't do this 😢",
-  "Come on… 👉👈",
-  "I'm begging 😩",
-];
-
 function initQuestion() {
   const btnYes = document.getElementById('btn-yes');
   const btnNo  = document.getElementById('btn-no');
@@ -162,7 +151,7 @@ function initQuestion() {
   // Reset state
   noAttempts = 0;
   twistTriggered = false;
-  btnNo.textContent = NO_TEXTS[0];
+  btnNo.textContent = 'No 🙈';
   btnNo.style.transform = '';
   btnNo.style.position = 'absolute';
 
@@ -210,9 +199,8 @@ function handleNoHover() {
   const pw = parent.offsetWidth;
   const ph = Math.max(parent.offsetHeight, 90);
 
-  // Update text
-  const textIdx = Math.min(noAttempts, NO_TEXTS.length - 1);
-  btnNo.textContent = NO_TEXTS[textIdx];
+  // Text stays fixed
+  btnNo.textContent = 'No 🙈';
 
   // Increase container height as button escapes more aggressively
   parent.style.minHeight = `${Math.min(ph + 10, 200)}px`;
@@ -265,15 +253,15 @@ async function initTwist() {
   const btnFeel  = document.getElementById('btn-feelgood');
 
   await delay(300);
-  await typeText(line1, "Okay okay 😅", 52);
+  await typeText(line1, "Haha okay, you win! 😄", 52);
   await delay(350);
 
   await fadeIn(line2);
-  await typeText(line2, "Sorry, I was just trying to make you smile 😊", 44);
+  await typeText(line2, "That button really didn't want to cooperate 😅", 44);
   await delay(350);
 
   await fadeIn(line3);
-  await typeText(line3, "I didn't mean to put you on the spot…", 44);
+  await typeText(line3, "No pressure at all, promise 🤍", 44);
   await delay(400);
 
   showBtn(btnFeel, 300);
