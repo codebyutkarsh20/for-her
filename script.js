@@ -259,15 +259,15 @@ async function initTwist() {
   const btnFeel  = document.getElementById('btn-feelgood');
 
   await delay(300);
-  await typeText(line1, "Okay, I hear you.", 52);
+  await typeText(line1, "That is okay. Really.", 52);
   await delay(350);
 
   await fadeIn(line2);
-  await typeText(line2, "No pressure. Truly.", 44);
+  await typeText(line2, "All I have ever wanted is to see you happy.", 44);
   await delay(350);
 
   await fadeIn(line3);
-  await typeText(line3, "I just wanted you to know that I still care.", 44);
+  await typeText(line3, "Even if that has nothing to do with me.", 44);
   await delay(400);
 
   showBtn(btnFeel, 300);
