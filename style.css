@@ -248,10 +248,12 @@ html, body {
   padding-bottom: 48px;
 }
 
-.question-emoji {
+.question-icon {
   font-size: 3.5rem;
+  color: var(--pink-deep);
   margin-bottom: 16px;
   animation: pulse 2.2s ease-in-out infinite;
+  line-height: 1;
 }
 
 @keyframes pulse {
@@ -275,10 +277,12 @@ html, body {
   padding: 60px 44px;
 }
 
-.yes-emoji {
+.yes-icon {
   font-size: 4rem;
+  color: var(--pink-deep);
   margin-bottom: 16px;
   animation: bounce 1s ease infinite alternate;
+  line-height: 1;
 }
 
 @keyframes bounce {
@@ -295,6 +299,7 @@ html, body {
 
 .hearts-row {
   font-size: 2rem;
+  color: var(--pink-deep);
   margin-bottom: 24px;
   letter-spacing: 8px;
   animation: heartbeat 1.8s ease-in-out infinite;

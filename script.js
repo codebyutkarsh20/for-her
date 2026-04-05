@@ -63,13 +63,14 @@ function goTo(fromId, toId, callback) {
 /* ═══════════════════════════════════════════
    Heart particles
 ═══════════════════════════════════════════ */
-const HEART_EMOJIS = ['💛', '🩷', '💜', '🤍', '💗', '✨'];
+const HEART_COLORS = ['#f9a8d4', '#c4b5fd', '#fbcfe8', '#ddd6fe', '#e9d5ff'];
 
 function spawnHeart() {
   const bg   = document.getElementById('heartsBg');
   const el   = document.createElement('span');
   el.className = 'heart-particle';
-  el.textContent = HEART_EMOJIS[Math.floor(Math.random() * HEART_EMOJIS.length)];
+  el.textContent = '♥';
+  el.style.color = HEART_COLORS[Math.floor(Math.random() * HEART_COLORS.length)];
 
   const size     = 0.9 + Math.random() * 1.1;
   const left     = Math.random() * 100;
@@ -101,11 +102,11 @@ setInterval(spawnHeart, 1800);
   // Small delay before starting
   await delay(700);
 
-  await typeText(line1, "Hey… there's something I've been wanting to say.", 44);
+  await typeText(line1, "Hey... there is something I have been wanting to say.", 44);
   await delay(550);
 
   await fadeIn(line2);
-  await typeText(line2, "It's been on my mind for a while now...", 44);
+  await typeText(line2, "It has been on my mind for a while now.", 44);
   await delay(400);
 
   showBtn(btnCont, 300);
@@ -126,11 +127,11 @@ async function initBuildup() {
   const btnGo    = document.getElementById('btn-goahead');
 
   await delay(300);
-  await typeText(line1, "I really hope this makes you smile…", 46);
+  await typeText(line1, "I really hope this makes you smile.", 46);
   await delay(450);
 
   await fadeIn(line2);
-  await typeText(line2, "Because I have a question for you 🥺", 46);
+  await typeText(line2, "Because I have a question for you.", 46);
   await delay(400);
 
   showBtn(btnGo, 300);
@@ -151,7 +152,7 @@ function initQuestion() {
   // Reset state
   noAttempts = 0;
   twistTriggered = false;
-  btnNo.textContent = 'No 🙈';
+  btnNo.textContent = 'No';
   btnNo.style.transform = '';
   btnNo.style.position = 'absolute';
 
@@ -200,7 +201,7 @@ function handleNoHover() {
   const ph = Math.max(parent.offsetHeight, 90);
 
   // Text stays fixed
-  btnNo.textContent = 'No 🙈';
+  btnNo.textContent = 'No';
 
   // Increase container height as button escapes more aggressively
   parent.style.minHeight = `${Math.min(ph + 10, 200)}px`;
@@ -253,15 +254,15 @@ async function initTwist() {
   const btnFeel  = document.getElementById('btn-feelgood');
 
   await delay(300);
-  await typeText(line1, "Haha okay, you win! 😄", 52);
+  await typeText(line1, "Haha okay, you win.", 52);
   await delay(350);
 
   await fadeIn(line2);
-  await typeText(line2, "That button really didn't want to cooperate 😅", 44);
+  await typeText(line2, "That button really did not want to cooperate.", 44);
   await delay(350);
 
   await fadeIn(line3);
-  await typeText(line3, "No pressure at all, promise 🤍", 44);
+  await typeText(line3, "No pressure at all, I promise.", 44);
   await delay(400);
 
   showBtn(btnFeel, 300);
