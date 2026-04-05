@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Something Important...</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Floating hearts background -->
+  <div class="hearts-bg" id="heartsBg"></div>
+
+  <!-- ── Screen 1: Intro ── -->
+  <section class="screen active" id="screen-intro">
+    <div class="card">
+      <div class="typing-area">
+        <p class="line" id="intro-line1"></p>
+        <p class="line faded" id="intro-line2"></p>
+      </div>
+      <button class="btn primary hidden" id="btn-continue">Continue →</button>
+    </div>
+  </section>
+
+  <!-- ── Screen 2: Build-Up ── -->
+  <section class="screen" id="screen-buildup">
+    <div class="card">
+      <div class="typing-area">
+        <p class="line" id="buildup-line1"></p>
+        <p class="line faded" id="buildup-line2"></p>
+      </div>
+      <button class="btn primary hidden" id="btn-goahead">Go ahead 👀</button>
+    </div>
+  </section>
+
+  <!-- ── Screen 3: Main Question ── -->
+  <section class="screen" id="screen-question">
+    <div class="card question-card">
+      <div class="question-emoji">💖</div>
+      <h1 class="question-text">Will you go out with me?</h1>
+      <div class="answer-buttons">
+        <button class="btn yes-btn" id="btn-yes">Yes 💖</button>
+        <button class="btn no-btn" id="btn-no">No 🙈</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Screen 4: Yes! ── -->
+  <section class="screen" id="screen-yes">
+    <div class="card yes-card">
+      <div class="yes-emoji">🥳</div>
+      <h1 class="glow-text">YAY!! 🎉</h1>
+      <p class="sub-text">You just made everything so much better 💖</p>
+      <p class="sub-text soft">I'm smiling so hard right now 😊</p>
+    </div>
+  </section>
+
+  <!-- ── Screen 5: Twist ── -->
+  <section class="screen" id="screen-twist">
+    <div class="card">
+      <div class="typing-area">
+        <p class="line" id="twist-line1"></p>
+        <p class="line faded" id="twist-line2"></p>
+        <p class="line faded" id="twist-line3"></p>
+      </div>
+      <button class="btn primary hidden" id="btn-feelgood">Aww, okay 🤗</button>
+    </div>
+  </section>
+
+  <!-- ── Screen 6: Feel-Good ── -->
+  <section class="screen" id="screen-feelgood">
+    <div class="card feelgood-card">
+      <div class="hearts-row">💛 💛 💛</div>
+      <p class="glow-text soft-glow">Honestly…</p>
+      <p class="big-text">I just wanted to make your day a little better 💛</p>
+      <p class="sub-text">No pressure, just smiles 😊</p>
+      <button class="btn ghost" id="btn-stillask">But still… answer matters 😉</button>
+    </div>
+  </section>
+
+  <footer>Made with ❤️ just for you</footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

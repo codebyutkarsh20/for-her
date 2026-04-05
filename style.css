@@ -1,0 +1,392 @@
+/* ─────────────────────────────────────────
+   Reset & Base
+───────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --pink:        #f9a8d4;
+  --pink-deep:   #ec4899;
+  --lavender:    #c4b5fd;
+  --purple:      #7c3aed;
+  --white:       #fff;
+  --off-white:   #fdf4ff;
+  --text-dark:   #3b0764;
+  --text-mid:    #6b21a8;
+  --text-soft:   #a78bfa;
+  --glass-bg:    rgba(255, 255, 255, 0.18);
+  --glass-border:rgba(255, 255, 255, 0.35);
+  --shadow:      0 8px 40px rgba(124, 58, 237, 0.18);
+  --transition:  0.55s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+html, body {
+  height: 100%;
+  font-family: 'Georgia', 'Times New Roman', serif;
+  background: linear-gradient(135deg, #fce4ec 0%, #ede7f6 40%, #e8eaf6 100%);
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+/* ─────────────────────────────────────────
+   Floating Hearts Background
+───────────────────────────────────────── */
+.hearts-bg {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.heart-particle {
+  position: absolute;
+  bottom: -60px;
+  font-size: 1.4rem;
+  animation: floatUp linear infinite;
+  opacity: 0;
+  user-select: none;
+}
+
+@keyframes floatUp {
+  0%   { transform: translateY(0) rotate(0deg) scale(0.8); opacity: 0; }
+  10%  { opacity: 0.7; }
+  90%  { opacity: 0.5; }
+  100% { transform: translateY(-110vh) rotate(25deg) scale(1.1); opacity: 0; }
+}
+
+/* ─────────────────────────────────────────
+   Screens
+───────────────────────────────────────── */
+.screen {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  z-index: 1;
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(0.97) translateY(12px);
+  transition: opacity var(--transition), transform var(--transition);
+}
+
+.screen.active {
+  opacity: 1;
+  pointer-events: all;
+  transform: scale(1) translateY(0);
+}
+
+.screen.exit {
+  opacity: 0;
+  transform: scale(1.03) translateY(-12px);
+  pointer-events: none;
+}
+
+/* ─────────────────────────────────────────
+   Glass Card
+───────────────────────────────────────── */
+.card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(24px) saturate(1.4);
+  -webkit-backdrop-filter: blur(24px) saturate(1.4);
+  border: 1px solid var(--glass-border);
+  border-radius: 28px;
+  padding: 52px 44px;
+  max-width: 520px;
+  width: 100%;
+  text-align: center;
+  box-shadow: var(--shadow), inset 0 1px 0 rgba(255,255,255,0.5);
+  position: relative;
+  z-index: 2;
+}
+
+/* ─────────────────────────────────────────
+   Typing Area
+───────────────────────────────────────── */
+.typing-area {
+  min-height: 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  margin-bottom: 36px;
+}
+
+.line {
+  font-size: clamp(1.05rem, 3vw, 1.3rem);
+  color: var(--text-dark);
+  line-height: 1.6;
+  letter-spacing: 0.01em;
+  min-height: 1.6em;
+  opacity: 1;
+  transition: opacity 0.6s ease;
+}
+
+.line.faded {
+  opacity: 0;
+}
+
+/* blinking cursor */
+.cursor {
+  display: inline-block;
+  width: 2px;
+  height: 1.1em;
+  background: var(--pink-deep);
+  margin-left: 2px;
+  vertical-align: text-bottom;
+  animation: blink 0.9s step-end infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+/* ─────────────────────────────────────────
+   Buttons
+───────────────────────────────────────── */
+.btn {
+  display: inline-block;
+  padding: 14px 36px;
+  border: none;
+  border-radius: 50px;
+  font-size: 1rem;
+  font-family: inherit;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.4s ease;
+  position: relative;
+  z-index: 10;
+}
+
+.btn:active { transform: scale(0.96); }
+
+/* Primary */
+.btn.primary {
+  background: linear-gradient(135deg, var(--pink-deep), var(--purple));
+  color: var(--white);
+  box-shadow: 0 4px 20px rgba(236, 72, 153, 0.4);
+  letter-spacing: 0.02em;
+}
+.btn.primary:hover {
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 8px 28px rgba(236, 72, 153, 0.5);
+}
+
+/* Ghost */
+.btn.ghost {
+  background: transparent;
+  border: 2px solid var(--lavender);
+  color: var(--text-mid);
+  margin-top: 24px;
+}
+.btn.ghost:hover {
+  background: rgba(196, 181, 253, 0.18);
+  transform: translateY(-2px) scale(1.02);
+}
+
+/* Hidden (fade-in later) */
+.btn.hidden {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(10px);
+}
+.btn.visible {
+  opacity: 1;
+  pointer-events: all;
+  transform: translateY(0);
+}
+
+/* ─────────────────────────────────────────
+   Answer Buttons (Yes / No)
+───────────────────────────────────────── */
+.answer-buttons {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 36px;
+  position: relative;
+  min-height: 60px;
+}
+
+.yes-btn {
+  background: linear-gradient(135deg, #f472b6, #a855f7);
+  color: white;
+  box-shadow: 0 4px 20px rgba(168, 85, 247, 0.4);
+  font-size: 1.1rem;
+  padding: 16px 44px;
+}
+.yes-btn:hover {
+  transform: translateY(-3px) scale(1.06);
+  box-shadow: 0 8px 30px rgba(168, 85, 247, 0.55);
+}
+
+.no-btn {
+  background: rgba(255, 255, 255, 0.55);
+  border: 2px solid var(--pink);
+  color: var(--text-mid);
+  font-size: 1rem;
+  padding: 14px 34px;
+  /* will be repositioned by JS */
+  position: absolute;
+  transition: left 0.25s ease, top 0.25s ease, transform 0.25s ease;
+  white-space: nowrap;
+}
+
+/* ─────────────────────────────────────────
+   Question Screen
+───────────────────────────────────────── */
+.question-card {
+  padding-top: 48px;
+  padding-bottom: 48px;
+}
+
+.question-emoji {
+  font-size: 3.5rem;
+  margin-bottom: 16px;
+  animation: pulse 2.2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1);    }
+  50%       { transform: scale(1.12); }
+}
+
+.question-text {
+  font-size: clamp(1.6rem, 5vw, 2.2rem);
+  color: var(--text-dark);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+  margin-bottom: 8px;
+}
+
+/* ─────────────────────────────────────────
+   Yes Screen
+───────────────────────────────────────── */
+.yes-card {
+  padding: 60px 44px;
+}
+
+.yes-emoji {
+  font-size: 4rem;
+  margin-bottom: 16px;
+  animation: bounce 1s ease infinite alternate;
+}
+
+@keyframes bounce {
+  from { transform: translateY(0); }
+  to   { transform: translateY(-14px); }
+}
+
+/* ─────────────────────────────────────────
+   Feel-Good Screen
+───────────────────────────────────────── */
+.feelgood-card {
+  padding: 52px 44px;
+}
+
+.hearts-row {
+  font-size: 2rem;
+  margin-bottom: 24px;
+  letter-spacing: 8px;
+  animation: heartbeat 1.8s ease-in-out infinite;
+}
+
+@keyframes heartbeat {
+  0%, 100% { transform: scale(1); }
+  25%       { transform: scale(1.1); }
+  50%       { transform: scale(1); }
+  75%       { transform: scale(1.06); }
+}
+
+.big-text {
+  font-size: clamp(1.1rem, 3.5vw, 1.45rem);
+  color: var(--text-dark);
+  line-height: 1.6;
+  margin-bottom: 16px;
+}
+
+/* ─────────────────────────────────────────
+   Glow Text
+───────────────────────────────────────── */
+.glow-text {
+  font-size: clamp(2rem, 7vw, 3rem);
+  font-weight: 800;
+  color: var(--text-dark);
+  text-shadow:
+    0 0 12px rgba(236, 72, 153, 0.5),
+    0 0 30px rgba(168, 85, 247, 0.35),
+    0 0 60px rgba(168, 85, 247, 0.2);
+  animation: glowPulse 2.5s ease-in-out infinite;
+  margin-bottom: 12px;
+}
+
+.soft-glow {
+  font-size: clamp(1.4rem, 4vw, 1.9rem);
+}
+
+@keyframes glowPulse {
+  0%, 100% {
+    text-shadow:
+      0 0 10px rgba(236, 72, 153, 0.45),
+      0 0 28px rgba(168, 85, 247, 0.3);
+  }
+  50% {
+    text-shadow:
+      0 0 20px rgba(236, 72, 153, 0.8),
+      0 0 50px rgba(168, 85, 247, 0.55),
+      0 0 80px rgba(168, 85, 247, 0.3);
+  }
+}
+
+/* ─────────────────────────────────────────
+   Sub text
+───────────────────────────────────────── */
+.sub-text {
+  font-size: clamp(0.95rem, 2.5vw, 1.1rem);
+  color: var(--text-mid);
+  line-height: 1.6;
+  margin-top: 10px;
+}
+.sub-text.soft {
+  color: var(--text-soft);
+  font-style: italic;
+  margin-top: 8px;
+}
+
+/* ─────────────────────────────────────────
+   Footer
+───────────────────────────────────────── */
+footer {
+  position: fixed;
+  bottom: 18px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: 0.8rem;
+  color: var(--text-soft);
+  z-index: 99;
+  letter-spacing: 0.04em;
+  opacity: 0.8;
+}
+
+/* ─────────────────────────────────────────
+   Mobile tweaks
+───────────────────────────────────────── */
+@media (max-width: 480px) {
+  .card {
+    padding: 40px 28px;
+    border-radius: 22px;
+  }
+  .answer-buttons {
+    min-height: 80px;
+  }
+}
