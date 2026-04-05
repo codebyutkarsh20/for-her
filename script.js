@@ -61,100 +61,6 @@ function goTo(fromId, toId, callback) {
 }
 
 /* ═══════════════════════════════════════════
-   Background Music (Web Audio API)
-   Starts on first user interaction.
-   A soft 16-note melody in C major that loops.
-═══════════════════════════════════════════ */
-const MELODY = [
-  // freq(Hz), duration(s)
-  [329.63, 0.45], // E4
-  [392.00, 0.45], // G4
-  [440.00, 0.45], // A4
-  [523.25, 0.45], // C5
-  [493.88, 0.45], // B4
-  [440.00, 0.45], // A4
-  [392.00, 0.45], // G4
-  [329.63, 0.65], // E4 (hold)
-  [440.00, 0.45], // A4
-  [523.25, 0.45], // C5
-  [587.33, 0.45], // D5
-  [523.25, 0.45], // C5
-  [493.88, 0.45], // B4
-  [440.00, 0.45], // A4
-  [392.00, 0.45], // G4
-  [329.63, 0.85], // E4 (hold)
-];
-
-let audioCtx    = null;
-let masterGain  = null;
-let musicMuted  = false;
-let musicStarted = false;
-let scheduleTimer = null;
-let nextNoteTime  = 0;
-let noteIndex     = 0;
-
-function initAudio() {
-  if (musicStarted) return;
-  musicStarted = true;
-
-  audioCtx   = new (window.AudioContext || window.webkitAudioContext)();
-  masterGain = audioCtx.createGain();
-  document.getElementById('btn-mute').classList.add('active');
-  masterGain.gain.setValueAtTime(0, audioCtx.currentTime);
-  masterGain.gain.linearRampToValueAtTime(0.13, audioCtx.currentTime + 2.5);
-  masterGain.connect(audioCtx.destination);
-
-  nextNoteTime = audioCtx.currentTime + 0.3;
-  noteIndex    = 0;
-  scheduleNotes();
-}
-
-function scheduleNotes() {
-  // Schedule ahead 0.2 s at a time
-  while (nextNoteTime < audioCtx.currentTime + 0.25) {
-    playNote(MELODY[noteIndex % MELODY.length], nextNoteTime);
-    nextNoteTime += MELODY[noteIndex % MELODY.length][1];
-    noteIndex++;
-  }
-  scheduleTimer = setTimeout(scheduleNotes, 100);
-}
-
-function playNote([freq, dur], when) {
-  const osc  = audioCtx.createOscillator();
-  const gain = audioCtx.createGain();
-
-  osc.type = 'triangle';
-  osc.frequency.setValueAtTime(freq, when);
-
-  // Soft envelope: quick attack, gentle decay, fade out before end
-  gain.gain.setValueAtTime(0, when);
-  gain.gain.linearRampToValueAtTime(1, when + 0.04);      // attack
-  gain.gain.linearRampToValueAtTime(0.6, when + 0.12);    // decay
-  gain.gain.setValueAtTime(0.6, when + dur - 0.09);       // sustain
-  gain.gain.linearRampToValueAtTime(0, when + dur);       // release
-
-  osc.connect(gain);
-  gain.connect(masterGain);
-  osc.start(when);
-  osc.stop(when + dur);
-}
-
-function toggleMute() {
-  if (!audioCtx) return;
-  musicMuted = !musicMuted;
-  const btn = document.getElementById('btn-mute');
-  if (musicMuted) {
-    masterGain.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 0.4);
-    btn.textContent = '♪ off';
-    btn.classList.add('muted');
-  } else {
-    masterGain.gain.linearRampToValueAtTime(0.13, audioCtx.currentTime + 0.4);
-    btn.textContent = '♪ on';
-    btn.classList.remove('muted');
-  }
-}
-
-/* ═══════════════════════════════════════════
    Heart particles
 ═══════════════════════════════════════════ */
 const HEART_COLORS = ['#f9a8d4', '#c4b5fd', '#fbcfe8', '#ddd6fe', '#e9d5ff'];
@@ -205,10 +111,7 @@ setInterval(spawnHeart, 1800);
 
   showBtn(btnCont, 300);
 
-  btnCont.addEventListener('click', () => {
-    initAudio();
-    goTo('screen-intro', 'screen-buildup', initBuildup);
-  });
+  btnCont.addEventListener('click', () => goTo('screen-intro', 'screen-buildup', initBuildup));
 })();
 
 function delay(ms) {
